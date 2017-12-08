@@ -5,8 +5,8 @@ var client = new Client();
 
 var apiBaseUrl = 'https://api.8qiu.cn/api/v3';
 
-/* GET users listing. */
-router.get('/messages/:id/videos', function(req, res, next) {
+router.get('/messages/:id', function(req, res, next) {
+  console.log('tttttttt');
   var messageId = req.params.id.split('_')[0];
   var partNo = req.params.id.split('_')[1];
   client.get(apiBaseUrl+'/messages/' + messageId + '/videos', function (body, response) {
@@ -18,6 +18,10 @@ router.get('/messages/:id/videos', function(req, res, next) {
     });
     res.render('video', body);
   });
+});
+
+router.get('/messages/:id/video', function(req, res, next) {
+  res.redirect("/messsages/"+req.params.id);
 });
 
 module.exports = router;
