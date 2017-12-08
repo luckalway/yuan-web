@@ -21,7 +21,7 @@ router.get('/messages/:id', function(req, res, next) {
 });
 
 router.get('/messages/:id/video', function(req, res, next) {
-  res.redirect("/messsages/"+req.params.id);
+  res.redirect("/messages/"+req.params.id);
 });
 
 module.exports = router;
