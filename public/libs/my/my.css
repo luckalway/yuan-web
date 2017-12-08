@@ -1,0 +1,17 @@
+.button a.active{
+	background-color:red !important;
+}
+
+#audioContainer{
+	text-align:center;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+#audioContainer audio{
+	width:100%;
+}
+
+#messageList .active{
+	background-color:#9933cc;
+}

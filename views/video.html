@@ -1,0 +1,161 @@
+{{!< default}}
+<div class="grid-container fluid" style="padding:0px;">
+  <div class="grid-x">
+  <div class="small-12 medium-8 cell" >
+    <div id="videoContainer" class="small-12 medium-8 cell">
+      <video id="videoPlayer" controls style="width:100%;" poster="{{videoUrl}}/data/messages/{{message._id}}/video_cover.jpg">
+        <source src="{{videoUrl}}{{currentPart.video.url}}"  type="video/mp4"/>
+        您的浏览器不支持 HTML5 video 标签。
+      </video>
+    </div>
+
+    <div id="audioContainer" class="small-12 medium-8 cell"  style="display:none;">
+      <audio id="audioPlayer" src="{{videoUrl}}{{currentPart.audio.url}}" controls="controls">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+
+    <hr style="margin:5px;">
+    <div id="messageTitle" style="margin:0 0 15px 5px;color:#FF9224;">
+      {{message.title}}({{currentPart.partNo}}/{{message.countOfParts}})
+    </div>
+
+  </div>
+</div>
+
+
+  <div class="small-12 medium-4 cell">
+    <div class="grid-x">
+      <div class="small-6 medium-6 cell">
+        <div id="avSwitchButton" class="ui labeled button" tabindex="0">
+          <a id="videoButton" data-type="video" class="ui basic active label">
+            视频
+          </a>
+          <a id="audioButton" data-type="audio" class="ui basic label">
+            音频
+          </a>
+        </div>
+      </div>
+
+      <div class="small-6 medium-6 cell text-right">
+        <div class="ui toggle checkbox">
+          <input id="autoPlay" class="hidden" type="checkbox">
+          <label>连续播放</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-x">
+      <div class="small-12 cell ">
+        <div id="contentTab" class="ui secondary three item pointing menu">
+          <a class="item active" data-rel="messageList">媒体列表</a>
+          <a class="item" data-rel="scriptures">经文</a>
+          <a class="item" data-rel="summary">概要</a>
+        </div>
+
+        <div class="content">
+          <div id="messageList" class="ui segments">
+            {{#message.parts}}
+            <div class="ui segment {{active}}" data-audio="{{../videoUrl}}{{audio.url}}"  data-video="{{../videoUrl}}{{video.url}}" data-title="{{../message.title}}({{partNo}}/{{../message.countOfParts}})">
+              <p>{{../message.title}}({{partNo}}/{{../message.countOfParts}})</p>
+            </div>
+            {{/message.parts}}
+          </div>
+
+          <div id="scriptures" class="ui stacked segment" style="display:none;">
+            <p>{{message.scripture}}</p>
+          </div>
+
+
+          <div id="summary" class="ui raised segment" style="display:none;">
+            <p>{{message.summary}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+require(["jquery","semantic"], function($, s){
+  $('#contentTab .item').click(function(){
+    $('#contentTab .item').removeClass('active');
+    var self = $(this);
+    self.addClass('active');
+    self.parent().parent().find('.content').children().hide();
+    $('#'+self.data('rel')).show();
+  });
+
+  var videoPlayer = document.getElementById("videoPlayer");
+  var audioPlayer = document.getElementById("audioPlayer");
+  videoPlayer.addEventListener("ended", function(){
+    $('#autoPlay').change();
+    if($('#videoButton').hasClass('active') && $('#autoPlay').is(':checked')){
+      setTimeout(function(){
+        $('#messageList .active').next().click();
+      }, 2000);
+    }
+  });
+
+  audioPlayer.addEventListener("ended", function(){
+    $('#autoPlay').change();
+    if($('#audioButton').hasClass('active') && $('#autoPlay').is(':checked')){
+      setTimeout(function(){
+        $('#messageList .active').next().click();
+      }, 2000);
+    }
+  });
+
+  $('#avSwitchButton').click(function(){
+    $('#avSwitchButton .label').each(function(i, item){
+      var item = $(item);
+      if(item.hasClass('active')){
+        item.removeClass('active');
+      }else{
+        item.addClass('active');
+        if(item.data('type') == 'audio'){
+          videoPlayer.pause();
+          $('#audioContainer').show();
+          $('#videoContainer').hide();
+          audioPlayer.load();
+        }else{
+          audioPlayer.pause();
+          $('#videoContainer').show();
+          $('#audioContainer').hide();
+          videoPlayer.load();
+        }
+      }
+    })
+  });
+
+  $('.ui.checkbox').checkbox();
+
+  $('#autoPlay').change(function(){
+    var isAutoPlay = $(this).is(':checked');
+    videoPlayer.autoplay = $('#videoButton').hasClass('active') && isAutoPlay
+    audioPlayer.autoplay = $('#audioButton').hasClass('active') && isAutoPlay;
+  });
+
+  $('#messageList .segment').click(function(){
+    if($(this).hasClass('active'))
+      return false;
+
+    $('#messageList .segment').removeClass('active');
+    $(this).addClass('active');
+    $('#messageTitle').html($(this).data('title'));
+
+    var self = this;
+    if($('#audioButton').hasClass('active')){
+      audioPlayer.src = $(self).data('audio');
+      audioPlayer.load();
+    }else{
+      videoPlayer.src = $(self).data('video');
+      videoPlayer.load();
+    }
+  });
+})
+</script>
