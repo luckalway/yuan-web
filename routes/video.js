@@ -6,7 +6,6 @@ var client = new Client();
 var apiBaseUrl = 'https://api.8qiu.cn/api/v3';
 
 router.get('/messages/:id', function(req, res, next) {
-  console.log('tttttttt');
   var messageId = req.params.id.split('_')[0];
   var partNo = req.params.id.split('_')[1];
   client.get(apiBaseUrl+'/messages/' + messageId + '/videos', function (body, response) {
