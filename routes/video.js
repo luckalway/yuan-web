@@ -3,7 +3,7 @@ var router = express.Router();
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-var apiBaseUrl = 'http://admin.8qiu.cn/api/v3';
+var apiBaseUrl = 'https://api.8qiu.cn/api/v3';
 
 router.get('/messages/:id', function(req, res, next) {
   var messageId = req.params.id.split('_')[0];
