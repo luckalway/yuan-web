@@ -11,6 +11,12 @@ router.get('/messages/:id', function(req, res, next) {
   console.log(apiBaseUrl+'/messages/' + req.params.id + '/videos');
   client.get(apiBaseUrl+'/messages/' + req.params.id + '/videos', function (body, response) {
     body.parts.forEach(function(part){
+      part.title = body.message.title;
+      var countOfParts = parseInt(body.message.countOfParts);
+      if(countOfParts >1 ){
+        part.title += '(' + part.partNo + '/' + countOfParts + ')'
+      }
+      
       if(part.partNo == partNo){
         body.currentPart = part;
         part.active = 'active';
