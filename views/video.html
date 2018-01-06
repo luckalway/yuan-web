@@ -1,80 +1,71 @@
 {{!< default}}
-<div class="grid-container full">
-  <div class="grid-x" >
-    <div class="small-12 medium-8 cell" >
-      <div id="videoContainer" class="small-12 medium-12 cell">
-        <div class="ui mini message brown" style="text-align:center;margin:0;">建议在wifi下观看视频，移动网络可切换到音频播放</div>
-        <video id="videoPlayer" controls style="width:100%;" poster="{{videoUrl}}/data/messages/{{message._id}}/video_cover.jpg">
-          <source src="{{videoUrl}}{{currentPart.video.url}}"  type="video/mp4"/>
-          您的浏览器不支持 HTML5 video 标签。
-        </video>
-      </div>
-
-      <div id="audioContainer" class="small-12 medium-12 cell"  style="display:none;">
-        <audio id="audioPlayer" src="{{videoUrl}}{{currentPart.audio.url}}" controls="controls">
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-
-
-      <hr style="margin:5px;">
-      <div id="messageTitle" style="margin:0 0 15px 5px;color:#FF9224;">
-        {{currentPart.title}}
-      </div>
-
+<div class="ui stackable grid">
+  <div class="eleven wide column" >
+    <div id="videoContainer">
+      <div class="ui mini message brown" style="text-align:center;margin:0;">建议在wifi下观看视频，移动网络可切换到音频播放</div>
+      <video id="videoPlayer" controls style="width:100%;" poster="{{videoUrl}}/data/messages/{{message._id}}/video_cover.jpg">
+        <source src="{{videoUrl}}{{currentPart.video.url}}"  type="video/mp4"/>
+        您的浏览器不支持 HTML5 video 标签。
+      </video>
     </div>
 
-    <div class="small-12 medium-4 cell" style="padding:5px;">
-      <div class="grid-x">
-        <div class="small-6 medium-6 cell">
-          <div id="avSwitchButton" class="ui labeled button" tabindex="0">
-            <a id="videoButton" data-type="video" class="ui basic active label">视频</a>
-            <a id="audioButton" data-type="audio" class="ui basic label">音频</a>
-          </div>
-        </div>
+    <div id="audioContainer" style="display:none;">
+      <audio id="audioPlayer" src="{{videoUrl}}{{currentPart.audio.url}}" controls="controls">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
 
-        <div class="small-6 medium-6 cell text-right">
-          <div class="ui toggle checkbox">
-            <input id="autoPlay" class="hidden" type="checkbox">
-            <label>连续播放</label>
-          </div>
+
+    <hr style="margin:5px;">
+    <div id="messageTitle" style="color:#FF9224;">
+      {{currentPart.title}}
+    </div>
+
+  </div>
+
+  <div class="five wide column">
+    <div class="ui equal width grid">
+      <div class="column">
+        <div id="avSwitchButton" class="ui labeled button" tabindex="0">
+          <a id="videoButton" data-type="video" class="ui basic active label">视频</a>
+          <a id="audioButton" data-type="audio" class="ui basic label">音频</a>
         </div>
       </div>
 
-      <div class="grid-x">
-        <div class="small-12 cell ">
-          <div id="contentTab" class="ui secondary three item pointing menu">
-            <a class="item active" data-rel="messageList">媒体列表</a>
-            <a class="item" data-rel="scriptures">经文</a>
-            <a class="item" data-rel="summary">概要</a>
+      <div class="column">
+        <div class="ui toggle checkbox">
+          <input id="autoPlay" class="hidden" type="checkbox">
+          <label>连续播放</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="contentTab" class="ui secondary three item pointing menu">
+        <a class="item active" data-rel="messageList">媒体列表</a>
+        <a class="item" data-rel="scriptures">经文</a>
+        <a class="item" data-rel="summary">概要</a>
+      </div>
+
+      <div class="content">
+        <div id="messageList" class="ui segments">
+          {{#parts}}
+          <div class="ui segment {{active}}" data-audio="{{../videoUrl}}{{audio.url}}"  data-video="{{../videoUrl}}{{video.url}}" data-title="{{../message.title}}({{partNo}}/{{../message.countOfParts}})">
+            <p>{{title}}</p>
           </div>
+          {{/parts}}
+        </div>
 
-          <div class="content">
-            <div id="messageList" class="ui segments">
-              {{#parts}}
-              <div class="ui segment {{active}}" data-audio="{{../videoUrl}}{{audio.url}}"  data-video="{{../videoUrl}}{{video.url}}" data-title="{{../message.title}}({{partNo}}/{{../message.countOfParts}})">
-                <p>{{title}}</p>
-              </div>
-              {{/parts}}
-            </div>
+        <div id="scriptures" class="ui stacked segment" style="display:none;">
+          <p>{{message.scripture}}</p>
+        </div>
 
-            <div id="scriptures" class="ui stacked segment" style="display:none;">
-              <p>{{message.scripture}}</p>
-            </div>
-
-
-            <div id="summary" class="ui raised segment" style="display:none;">
-              <p>{{message.summary}}</p>
-            </div>
-          </div>
+        <div id="summary" class="ui raised segment" style="display:none;">
+          <p>{{message.summary}}</p>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-</div>
-</div>
 </div>
 <script type="text/javascript">
 require(["jquery","semantic"], function($, s){
