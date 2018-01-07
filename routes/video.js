@@ -3,7 +3,7 @@ var router = express.Router();
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-var apiBaseUrl = 'https://api.8qiu.cn/api/v3';
+var apiBaseUrl = 'https://api.8qiu.cn/api/v4';
 
 router.get('/messages/:id', function(req, res, next) {
   var messageId = req.params.id.split('_')[0];
@@ -16,7 +16,7 @@ router.get('/messages/:id', function(req, res, next) {
       if(countOfParts >1 ){
         part.title += '(' + part.partNo + '/' + countOfParts + ')'
       }
-      
+
       if(part.partNo == partNo){
         body.currentPart = part;
         part.active = 'active';
