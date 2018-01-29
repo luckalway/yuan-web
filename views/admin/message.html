@@ -3,10 +3,10 @@
 <div style="padding:20px;">
 
   <div class="row">
-    <h3 class="ui header">【主题信息】服从善道得了教育</h3>
+    <h3 class="ui header">{{message.title}}</h3>
     <div class="ui label">
       创建日期：
-      <div class="detail">2018-12-30</div>
+      <div class="detail">{{message.date}}</div>
     </div>
   </div>
   <div class="row">
@@ -14,10 +14,8 @@
       <div class="column">
         <div id="scripturesDiv" class="ui raised segment">
           <a class="ui red ribbon label">经文</a>
-          <p>
-            你若将这些事提醒弟兄们，便是基督耶稣的好执事，在真道的话语和你向来所服从的善道上得了教育。  提摩太前书4:6
-
-            但你们已经有的，总要持守，直等到我来。  启示录2:25
+          <p class="content">
+            {{{message.scripture}}}
           </p>
           <i class="edit icon"></i>
         </div>
@@ -25,10 +23,8 @@
       <div class="column">
         <div id="summaryDiv" class="ui raised segment">
           <a class="ui red ribbon label">概要</a>
-          <p>
-            你若将这些事提醒弟兄们，便是基督耶稣的好执事，在真道的话语和你向来所服从的善道上得了教育。  提摩太前书4:6
-
-            但你们已经有的，总要持守，直等到我来。  启示录2:25
+          <p class="content">
+            {{{message.summary}}}
           </p>
           <i class="edit icon"></i>
         </div>
@@ -44,8 +40,7 @@
   <div class="scrolling content">
     <div class="description">
       <div class="WYSIWYG" title="bullet number text">
-        <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
-        <p>Is it okay to use this photo?</p><p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
+        {{{message.scripture}}}
       </div>
     </div>
   </div>
@@ -53,7 +48,7 @@
     <div class="ui black deny button">
       取消
     </div>
-    <div class="ui positive right labeled icon button">
+    <div class="ui positive right labeled icon button publish-button">
       发布
       <i class="checkmark icon"></i>
     </div>
@@ -62,13 +57,12 @@
 
 <div id="summaryModal" class="ui tiny modal">
   <div class="header">
-    编辑经文
+    编辑概要
   </div>
   <div class="scrolling content">
     <div class="description">
       <div class="WYSIWYG" title="bullet number text">
-        <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
-        <p>Is it okay to use this photo?</p><p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
+            {{{message.summary}}}
       </div>
     </div>
   </div>
@@ -76,7 +70,7 @@
     <div class="ui black deny button">
       取消
     </div>
-    <div class="ui positive right labeled icon button">
+    <div class="ui positive right labeled icon button publish-button">
       发布
       <i class="checkmark icon"></i>
     </div>
@@ -92,5 +86,36 @@ require(["jquery","semantic"], function($, s){
   $('#summaryDiv i.edit').click(function(){
     $('#summaryModal').modal('show');
   });
+
+  $('#scripturesModal .publish-button').click(function(){
+    var scripture = $('#scripturesModal .wz_rte').html();
+    $.ajax({
+      type: "PATCH",
+      url: '#',
+      data: {scripture: scripture},
+      success: function(){
+        location.reload();
+      },
+      error: function(){
+
+      }
+    });
+  });
+
+  $('#summaryModal .publish-button').click(function(){
+    var summary = $('#summaryModal .wz_rte').html();
+    $.ajax({
+      type: "PATCH",
+      url: '#',
+      data: {summary: summary},
+      success: function(){
+        location.reload();
+      },
+      error: function(){
+
+      }
+    });
+  });
+
 });
 </script>
