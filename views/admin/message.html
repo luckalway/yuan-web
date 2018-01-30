@@ -1,14 +1,19 @@
 {{!< admin}}
 
 <div style="padding:20px;">
-
   <div class="row">
-    <h3 class="ui header">{{message.title}}</h3>
-    <div class="ui label">
-      创建日期：
-      <div class="detail">{{message.date}}</div>
+    <div class="ui breadcrumb">
+      <a class="section" href="./">讲章列表</a>
+      <i class="right angle icon divider"></i>
+      <div class="active section">{{message.title}}</div>
     </div>
   </div>
+  <div class="row" style="margin-top:10px;">
+  <div class="ui label">
+    创建日期：
+    <div class="detail">{{message.date}}</div>
+  </div>
+</div>
   <div class="row">
     <div class="ui two column padded grid">
       <div class="column">
