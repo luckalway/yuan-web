@@ -1,0 +1,52 @@
+{{!< admin}}
+
+<div class="ui grid container" style="margin-top:20px;">
+  <form class="ui form" method="post">
+    <div class="field">
+      <label>用户名</label>
+      <input name="username" placeholder="请输入用户名" type="text">
+    </div>
+    <div class="field">
+      <label>姓名</label>
+      <input name="fullname" placeholder="请输入姓名" type="text">
+    </div>
+    <div class="inline fields">
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input name="gender" value="male" class="hidden" type="radio">
+          <label>弟兄</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input name="gender" value="female" class="hidden" type="radio">
+          <label>姊妹</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>请选择组（角色）</label>
+      <div class="ui selection dropdown">
+        <input name="role" type="hidden">
+        <i class="dropdown icon"></i>
+        <div class="default text">选择</div>
+        <div class="menu">
+          <div class="item" data-value="bj">编辑组</div>
+          <div class="item" data-value="sh">审核组</div>
+          <div class="item" data-value="zl">资料组</div>
+          <div class="item" data-value="gl">管理组</div>
+        </div>
+      </div>
+    </div>
+    <button class="ui button" type="submit">保存</button>
+  </form>
+</div>
+
+<script type="text/javascript">
+require(["jquery","semantic"], function($, s){
+  $('.ui.radio.checkbox').checkbox();
+
+  $('.selection.dropdown').dropdown();
+});
+</script>
