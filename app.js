@@ -5,14 +5,16 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('express-hbs');
+var merge = require('merge')
 
-var env = require('./env-default');
+var app = express();
+
+var env = merge(require('./env-default'), require('./env-'+app.get('env')));
+global.CONF = env.conf;
 
 var index = require('./routes/index');
 var video = require('./routes/video');
 var admin = require('./routes/admin');
-
-var app = express();
 
 // view engine setup
 app.engine('html', hbs.express4({

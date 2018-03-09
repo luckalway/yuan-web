@@ -1,16 +1,17 @@
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-var api2Url = 'http://localhost:8000/api/v1.0';
+var apiBaseUrl =  global.CONF.oldApiBaseUrl;
 
 function getUrl(path){
   if(path.startsWith('http')){
     return path;
   }
-  return api2Url + path;
+  return apiBaseUrl + path;
 }
 
 exports.get = function(path, callback){
+  console.log('dddd',getUrl(path));
   client.get(getUrl(path), callback);
 }
 

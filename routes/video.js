@@ -3,13 +3,13 @@ var router = express.Router();
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-var apiBaseUrl = 'https://api.8qiu.cn/api/v4';
+var oldApiBaseUrl = global.CONF.oldApiBaseUrl;
 
 router.get('/messages/:id', function(req, res, next) {
   var messageId = req.params.id.split('_')[0];
   var partNo = req.params.id.split('_')[1];
-  console.log(apiBaseUrl+'/messages/' + req.params.id + '/videos');
-  client.get(apiBaseUrl+'/messages/' + req.params.id + '/videos', function (body, response) {
+  console.log(oldApiBaseUrl+'/messages/' + req.params.id + '/videos');
+  client.get(oldApiBaseUrl+'/messages/' + req.params.id + '/videos', function (body, response) {
     body.parts.forEach(function(part){
       part.title = body.message.title;
       var countOfParts = parseInt(body.message.countOfParts);
