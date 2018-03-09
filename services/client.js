@@ -1,22 +1,31 @@
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-exports.get = function(url, callback){
-  client.get(url, callback);
+var api2Url = 'http://localhost:8000/api/v1.0';
+
+function getUrl(path){
+  if(path.startsWith('http')){
+    return path;
+  }
+  return api2Url + path;
 }
 
-exports.post = function(url, data, callback){
+exports.get = function(path, callback){
+  client.get(getUrl(path), callback);
+}
+
+exports.post = function(path, data, callback){
   var args = {
     data: data,
     headers: { "Content-Type": "application/json" }
   };
-  client.post(url, args, callback);
+  client.post(getUrl(path), args, callback);
 }
 
-exports.patch = function(url, data, callback){
+exports.patch = function(path, data, callback){
   var args = {
     data: data,
     headers: { "Content-Type": "application/json" }
   };
-  client.patch(url, args, callback);
+  client.patch(getUrl(path), args, callback);
 }

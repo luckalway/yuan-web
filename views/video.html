@@ -1,5 +1,20 @@
 {{!< default}}
-<div class="ui stackable grid">
+<div class="ui grid"  style="padding:10px 10px 0 10px;">
+  <div class="left floated column" >
+    <a href="/"><i class="home icon" style="line-height:38px;font-size:38px;"></i></a>
+  </div>
+  <div class="left floated column" style="display:none;">
+    <div class="ui search">
+      <div class="ui icon input">
+        <input class="prompt" type="text" placeholder="请输入关键词">
+        <i class="search icon"></i>
+      </div>
+      <div class="results"></div>
+    </div>
+  </div>
+</div>
+
+<div class="ui stackable grid" style="margin:0;">
   <div class="eleven wide column" >
     <div id="videoContainer">
       <div class="ui mini message brown" style="text-align:center;margin:0;">建议在wifi下观看视频，移动网络可切换到音频播放</div>

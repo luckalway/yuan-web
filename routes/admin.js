@@ -4,8 +4,6 @@ var client = require('../services/client');
 
 var apiBaseUrl = 'http://localhost:8000/api/v4';
 
-var api2Url = 'http://localhost:8000/api/v1.0';
-
 router.get('/signIn', function(req, res) {
   res.render('admin/signIn', {});
 });
