@@ -1,7 +1,7 @@
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-var apiBaseUrl =  global.CONF.oldApiBaseUrl;
+var apiBaseUrl =  global.CONF.apiBaseUrl2;
 
 function getUrl(path){
   if(path.startsWith('http')){
@@ -11,7 +11,7 @@ function getUrl(path){
 }
 
 exports.get = function(path, callback){
-  console.log('dddd',getUrl(path));
+  console.log(getUrl(path));
   client.get(getUrl(path), callback);
 }
 

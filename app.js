@@ -34,7 +34,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-  console.log(env.conf);
 	res.locals.videoUrl = env.conf.videoUrl;
 	res.removeHeader("X-Powered-By");
 	next();
