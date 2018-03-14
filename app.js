@@ -6,11 +6,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('express-hbs');
 var merge = require('merge')
+var log4js = require('log4js');
 
 var app = express();
 
 var env = merge(require('./env-default'), require('./env-'+app.get('env')));
 global.CONF = env.conf;
+global.LOG = log4js.getLogger();
+LOG.level = app.get('env')=='production'?'info':'debug';
 
 var index = require('./routes/index');
 var video = require('./routes/video');
@@ -34,9 +37,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-	res.locals.videoUrl = env.conf.videoUrl;
-	res.removeHeader("X-Powered-By");
-	next();
+  res.locals.videoUrl = env.conf.videoUrl;
+  res.removeHeader("X-Powered-By");
+  next();
 });
 
 app.use('/', index);
@@ -52,10 +55,14 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  if(typeof(err) == 'string'){
+    res.locals.message = err;
+  }else if(err.message){
+    res.locals.message = err.message;
+  }
 
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  LOG.error(err);
   // render the error page
   res.status(err.status || 500);
   res.render('error');

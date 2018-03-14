@@ -5,7 +5,10 @@ var colors = ['Orange','Yellow','Olive','Green','Teal','Blue','Violet','Purple',
 
 
 router.get('/', function(req, res) {
-  client.get('/messages', function(messages){
+  client.get('/messages?descending=true', function(err, messages){
+    if(err){
+      return next(err);
+    }
     var i=0;
     messages.forEach(function(item){
       item.color = colors[i%colors.length].toLowerCase();

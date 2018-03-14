@@ -11,8 +11,12 @@ function getUrl(path){
 }
 
 exports.get = function(path, callback){
-  console.log(getUrl(path));
-  client.get(getUrl(path), callback);
+  client.get(getUrl(path), function(data, repsonse){
+    if(repsonse.statusCode != 200){
+      return callback('Exception on get request for "'+getUrl(path)+'": '+repsonse.statusCode+', '+repsonse.description);
+    }
+    return callback(null, data);
+  });
 }
 
 exports.post = function(path, data, callback){
