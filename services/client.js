@@ -11,10 +11,12 @@ function getUrl(path){
 }
 
 exports.get = function(path, callback){
-  client.get(getUrl(path), function(data, repsonse){
+  var url = getUrl(path);
+  client.get(url, function(data, repsonse){
     if(repsonse.statusCode != 200){
-      return callback('Exception on get request for "'+getUrl(path)+'": '+repsonse.statusCode+', '+repsonse.description);
+      return callback('Exception on get request for "'+url+'": '+repsonse.statusCode+', '+repsonse.description);
     }
+    LOG.debug('Get request on '+url+', status:'+repsonse.statusCode);
     return callback(null, data);
   });
 }
