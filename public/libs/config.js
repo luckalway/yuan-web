@@ -1,7 +1,7 @@
 require.config({
   baseUrl: "/libs",
   paths:  {
-    jquery: "jquery/jquery-min",
+    jquery: "jquery/jquery",
     semantic: "semantic/semantic.min",
     my: "my/my"
   },

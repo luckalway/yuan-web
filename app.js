@@ -17,6 +17,7 @@ LOG.level = app.get('env')=='production'?'info':'debug';
 
 var index = require('./routes/index');
 var video = require('./routes/video');
+var song = require('./routes/song');
 var admin = require('./routes/admin');
 
 // view engine setup
@@ -44,6 +45,7 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/', video);
+app.use('/songs', song);
 app.use('/admin', admin);
 
 // catch 404 and forward to error handler
