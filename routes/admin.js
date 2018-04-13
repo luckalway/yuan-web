@@ -8,7 +8,7 @@ router.get('/signIn', function(req, res) {
   res.render('admin/signIn', {});
 });
 
-router.get('/users', function(req, res) {
+router.get('/users', function(req, res, next) {
   client.get(apiBaseUrl+'/users', function (err, users) {
     if(err){
       return next(err);
@@ -28,14 +28,21 @@ router.post('/users/000000', function(req, res) {
   });
 });
 
-router.get('/messages', function(req, res) {
-  client.get(apiBaseUrl+'/messages', function (messages) {
+router.get('/messages', function(req, res, next) {
+  client.get(apiBaseUrl+'/messages', function (err, messages) {
+    if(err){
+      return next(err);
+    }
     res.render('admin/messages', {messages:messages});
   });
 });
 
-router.get('/messages/:id', function(req, res) {
-  client.get(apiBaseUrl+'/messages/'+req.params.id, function (message) {
+router.get('/messages/:id', function(req, res, next) {
+  client.get(apiBaseUrl+'/messages/'+req.params.id, function (err, message) {
+    if(err){
+      return next(err);
+    }
+
     res.render('admin/message', {
       message: message,
       title: message.title
@@ -48,5 +55,16 @@ router.patch('/messages/:id', function(req, res) {
     res.status(200).end();
   });
 });
+
+router.get('/articles', function(req, res, next) {
+  client.get(apiUrls.ebook + '/articles', function (err, messages) {
+    if(err){
+      return next(err);
+    }
+
+    res.render('admin/articles', {messages:messages});
+  });
+});
+
 
 module.exports = router;

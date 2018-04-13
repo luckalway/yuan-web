@@ -7,7 +7,7 @@
       <div class="content">
         <div class="header"><a href="/admin/messages/{{_id}}">{{title}}</a></div>
         <div class="meta">
-          <span class="date">创建日期：{{createdDate}}</span> 上传进度:{{countOfUploaded}}/{{countOfParts}}
+          <span class="date">创建日期：{{date createdDate unit='ms'}}</span> 上传进度:{{countOfUploaded}}/{{countOfParts}}
         </div>
         <div class="description">
           推送日期：{{#publishDates}} {{.}} | {{/publishDates}}

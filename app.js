@@ -5,19 +5,22 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('express-hbs');
-var merge = require('merge')
+var merge = require('merge');
+var moment = require('moment');
 var log4js = require('log4js');
 
 var app = express();
 
 var env = merge(require('./env-default'), require('./env-'+app.get('env')));
 global.CONF = env.conf;
+global.apiUrls = global.CONF.apiUrls;
 global.LOG = log4js.getLogger();
 LOG.level = app.get('env')=='production'?'info':'debug';
 
 var index = require('./routes/index');
 var video = require('./routes/video');
 var song = require('./routes/song');
+var article = require('./routes/article');
 var admin = require('./routes/admin');
 
 // view engine setup
@@ -46,6 +49,7 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/', video);
 app.use('/songs', song);
+app.use('/articles', article);
 app.use('/admin', admin);
 
 // catch 404 and forward to error handler
@@ -69,5 +73,14 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+hbs.registerHelper('date', function(text, options){
+  var format = options.format || 'YYYY-MM-DD'
+  var ms = text;
+  if(options.unit == 's'){
+    ms = text * 1000;
+  }
+  return moment(ms).format(format);
+})
 
 module.exports = app;

@@ -1,0 +1,62 @@
+{{!< default}}
+<style>
+.article .header {
+  font-size: 1.25em !important;
+  word-wrap: break-word !important;
+}
+
+.article .meta{
+  font-size: 1em !important;
+}
+
+.article .description{
+  font-size: 1em !important;
+}
+</style>
+<div class="grid-container full"  style="padding:10px 10px 0 10px;">
+  <div class="grid-x">
+    <div class="small-12">
+      <button class="ui left labeled icon button">
+        <i class="left arrow icon"></i>
+        上一篇
+      </button>
+      <button class="ui right labeled right floated icon button">
+        <i class="right arrow icon"></i>
+        下一篇
+      </button>
+    </div>
+    <div class="small-12 computer only column" style="margin-top:8px;"></div>
+    <div class="small-12">
+      <div class="ui items">
+        <div class="article item">
+          <div class="content">
+            <div class="header">{{title}}</div>
+            <div class="meta">
+              <span class="price">{{{date create_time unit='s'}}}</span>
+              <span class="stay">{{author}}</span>
+            </div>
+            <div class="description">
+              <p>
+                {{{content}}}
+              </p>
+            </div>
+            <button class="ui left labeled left floated icon button">
+              <i class="left arrow icon"></i>
+              上一篇
+            </button>
+            <button class="ui right labeled right floated icon button">
+              <i class="right arrow icon"></i>
+              下一篇
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+require(["jquery","semantic"], function($, s){
+
+});
+
+</script>

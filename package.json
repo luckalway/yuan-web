@@ -15,6 +15,7 @@
     "serve-favicon": "~2.4.5",
     "express-hbs": "~1.0.4",
     "node-rest-client":"3.1.0",
-    "log4js":"2.5.3"
+    "log4js":"2.5.3",
+    "moment":"2.22.0"
   }
 }
