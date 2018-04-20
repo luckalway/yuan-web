@@ -13,4 +13,13 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+router.get('/', function(req, res, next) {
+  client.get(apiUrlBase + '/articles/' + req.params.id, function (err, body) {
+    if(err){
+      return next(err);
+    }
+    res.render('article', body);
+  });
+});
+
 module.exports = router;

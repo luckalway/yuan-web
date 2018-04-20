@@ -1,0 +1,40 @@
+{{!< admin}}
+
+<div class="ui large breadcrumb">
+  <a class="section" href="/">首页</a>
+  <span class="divider">/</span>
+  <a class="section" href="/books">电子书列表</a>
+  <span class="divider">/</span>
+  <div class="active section">电子书-选择文章</div>
+</div>
+
+<div class="ui divider"></div>
+<div class="ui ordered steps">
+  <div class="completed step">
+    <div class="content">
+      <div class="title">新建电子书</div>
+    </div>
+  </div>
+  <div class="active step">
+    <div class="content">
+      <div class="title">选择文章</div>
+    </div>
+  </div>
+</div>
+
+<table id="articlesTable" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll"/></th>
+      <th>标题</th>
+      <th>推送时间</th>
+    </tr>
+  </thead>
+</table>
+<button class="ui button" type="submit">完成</button>
+
+<script type="text/javascript">
+require(["jquery", "datatable"], function($) {
+  $('#articlesTable').DataTable();
+});
+</script>

@@ -21,6 +21,7 @@ var index = require('./routes/index');
 var video = require('./routes/video');
 var song = require('./routes/song');
 var article = require('./routes/article');
+var book = require('./routes/book');
 var admin = require('./routes/admin');
 
 // view engine setup
@@ -50,6 +51,7 @@ app.use('/', index);
 app.use('/', video);
 app.use('/songs', song);
 app.use('/articles', article);
+app.use('/books', book);
 app.use('/admin', admin);
 
 // catch 404 and forward to error handler
