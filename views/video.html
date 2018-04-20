@@ -1,96 +1,94 @@
 {{!< default}}
-<div class="ui grid"  style="padding:10px 10px 0 10px;">
-  <div class="left floated column" >
-    <a href="/"><i class="home icon" style="line-height:38px;font-size:38px;"></i></a>
-  </div>
-  <div class="left floated column" style="display:none;">
-    <div class="ui search">
-      <div class="ui icon input">
-        <input class="prompt" type="text" placeholder="请输入关键词">
-        <i class="search icon"></i>
+<div class="ui secondary menu" style="margin-top:5px;">
+  <a href="/" class="item"><i class="home icon" style="line-height:38px;font-size:38px;"></i></a>
+  <div class="right menu">
+    <div class="item">
+      <div class="ui search">
+        <div class="ui icon input">
+          <input class="prompt" type="text" placeholder="请输入关键词">
+          <i class="search icon"></i>
+        </div>
+        <div class="results"></div>
       </div>
-      <div class="results"></div>
     </div>
   </div>
 </div>
 
-<div class="ui stackable grid" style="margin:0;">
-  <div class="eleven wide column" >
-    <div id="videoContainer">
-      <div class="ui mini message brown" style="text-align:center;margin:0;">建议在wifi下观看视频，移动网络可切换到音频播放</div>
-      <video id="videoPlayer" controls style="width:100%;" poster="{{videoUrl}}/data/messages/{{message._id}}/video_cover.jpg">
-        <source src="{{videoUrl}}{{currentPart.video.url}}"  type="video/mp4"/>
-        您的浏览器不支持 HTML5 video 标签。
-      </video>
-    </div>
-
-    <div id="audioContainer" style="display:none;">
-      <audio id="audioPlayer" src="{{videoUrl}}{{currentPart.audio.url}}" controls="controls">
-        Your browser does not support the audio element.
-      </audio>
-    </div>
-
-
-    <hr style="margin:5px;">
-    <div id="messageTitle" style="color:#FF9224;">
-      {{currentPart.title}}
-    </div>
-
-  </div>
-
-  <div class="five wide column">
-    <div class="ui equal width grid">
-      <div class="column">
-        <div id="avSwitchButton" class="ui labeled button" tabindex="0">
-          <a id="videoButton" data-type="video" class="ui basic active label">视频</a>
-          <a id="audioButton" data-type="audio" class="ui basic label">音频</a>
-        </div>
+<div class="ui stackable grid">
+  <div class="row" style="padding:0px;">
+    <div class="eleven wide column" >
+      <div id="videoContainer">
+        <div class="ui mini message brown" style="text-align:center;margin:0;">建议在wifi下观看视频，移动网络可切换到音频播放</div>
+        <video id="videoPlayer" controls style="width:100%;" poster="{{videoUrl}}/data/messages/{{message._id}}/video_cover.jpg">
+          <source src="{{videoUrl}}{{currentPart.video.url}}"  type="video/mp4"/>
+          您的浏览器不支持 HTML5 video 标签。
+        </video>
       </div>
 
-      <div class="column">
-        <div class="ui toggle checkbox">
-          <input id="autoPlay" class="hidden" type="checkbox">
-          <label>连续播放</label>
-        </div>
+      <div id="audioContainer" style="display:none;">
+        <audio id="audioPlayer" src="{{videoUrl}}{{currentPart.audio.url}}" controls="controls">
+          Your browser does not support the audio element.
+        </audio>
       </div>
+
+
+      <hr style="margin:5px;">
+      <div id="messageTitle" style="color:#FF9224;">
+        {{currentPart.title}}
+      </div>
+
     </div>
 
-    <div class="row">
-      <div id="contentTab" class="ui secondary three item pointing menu">
-        <a class="item active" data-rel="messageList">媒体列表</a>
-        <a class="item" data-rel="scriptures">经文</a>
-        <a class="item" data-rel="summary">概要</a>
-      </div>
-
-      <div class="content">
-        <div id="messageList" class="ui segments">
-          {{#parts}}
-          <div class="ui segment {{active}}" data-audio="{{../videoUrl}}{{audio.url}}"  data-video="{{../videoUrl}}{{video.url}}" data-title="{{../message.title}}({{partNo}}/{{../message.countOfParts}})">
-            <p>{{title}}</p>
+    <div class="five wide column">
+      <div class="ui equal width grid">
+        <div class="column">
+          <div id="avSwitchButton" class="ui buttons">
+            <button id="videoButton" data-type="video" class="ui button">视频</button>
+            <div class="or"></div>
+            <button id="audioButton" data-type="audio" class="ui positive button active">音频</button>
           </div>
-          {{/parts}}
         </div>
 
-        <div id="scriptures" class="ui stacked segment" style="display:none;">
-          <p>{{message.scripture}}</p>
-        </div>
-
-        <div id="summary" class="ui raised segment" style="display:none;">
-          <p>{{message.summary}}</p>
+        <div class="column">
+          <div class="ui toggle checkbox">
+            <input id="autoPlay" class="hidden" type="checkbox">
+            <label>连续播放</label>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="ui secondary three item pointing menu">
+      <div class="item active" data-tab="mediaList">媒体列表</div>
+      <div class="item" data-tab="scriptures">经文</div>
+      <div class="item" data-tab="summary">概要</div>
+    </div>
+    <div id="mediaList" class="ui tab active" data-tab="mediaList" style="width:100%;">
+      <div class="ui segments">
+        {{#parts}}
+        <div class="ui grey segment {{active}}" data-audio="{{../videoUrl}}{{audio.url}}"  data-video="{{../videoUrl}}{{video.url}}" data-title="{{../message.title}}({{partNo}}/{{../message.countOfParts}})">
+          <p>{{title}}</p>
+        </div>
+        {{/parts}}
+      </div>
+    </div>
+    <div class="ui tab" data-tab="scriptures">
+      <div class="ui raised text container segment">
+        {{message.scripture}}
+      </div>
+    </div>
+    <div class="ui tab" data-tab="summary">
+      <div class="ui raised text container segment">{{message.summary}}</div>
+    </div>
+  </div>
 </div>
+
+
 <script type="text/javascript">
 require(["jquery","semantic"], function($, s){
-  $('#contentTab .item').click(function(){
-    $('#contentTab .item').removeClass('active');
-    var self = $(this);
-    self.addClass('active');
-    self.parent().parent().find('.content').children().hide();
-    $('#'+self.data('rel')).show();
-  });
+  $('.menu .item').tab();
 
   var videoPlayer = document.getElementById("videoPlayer");
   var audioPlayer = document.getElementById("audioPlayer");
@@ -98,7 +96,7 @@ require(["jquery","semantic"], function($, s){
     $('#autoPlay').change();
     if($('#videoButton').hasClass('active') && $('#autoPlay').is(':checked')){
       setTimeout(function(){
-        $('#messageList .active').next().click();
+        $('#mediaList .active').next().click();
       }, 2000);
     }
   });
@@ -107,18 +105,20 @@ require(["jquery","semantic"], function($, s){
     $('#autoPlay').change();
     if($('#audioButton').hasClass('active') && $('#autoPlay').is(':checked')){
       setTimeout(function(){
-        $('#messageList .active').next().click();
+        $('#mediaList .active').next().click();
       }, 2000);
     }
   });
 
   $('#avSwitchButton').click(function(){
-    $('#avSwitchButton .label').each(function(i, item){
+    $(this).find('.button').each(function(i, item){
       var item = $(item);
       if(item.hasClass('active')){
         item.removeClass('active');
+        item.removeClass('positive');
       }else{
         item.addClass('active');
+        item.addClass('positive');
         if(item.data('type') == 'audio'){
           videoPlayer.pause();
           $('#audioContainer').show();
@@ -142,11 +142,12 @@ require(["jquery","semantic"], function($, s){
     audioPlayer.autoplay = $('#audioButton').hasClass('active') && isAutoPlay;
   });
 
-  $('#messageList .segment').click(function(){
-    if($(this).hasClass('active'))
-    return false;
+  $('#mediaList .segment').click(function(){
+    if($(this).hasClass('active')){
+      return false;
+    }
 
-    $('#messageList .segment').removeClass('active');
+    $('#mediaList .segment').removeClass('active');
     $(this).addClass('active');
     $('#messageTitle').html($(this).data('title'));
 

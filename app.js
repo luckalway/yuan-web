@@ -11,7 +11,7 @@ var log4js = require('log4js');
 
 var app = express();
 
-var env = merge(require('./env-default'), require('./env-'+app.get('env')));
+var env = merge.recursive(require('./env-default'), require('./env-'+app.get('env')));
 global.CONF = env.conf;
 global.apiUrls = global.CONF.apiUrls;
 global.LOG = log4js.getLogger();
@@ -75,12 +75,12 @@ app.use(function(err, req, res, next) {
 });
 
 hbs.registerHelper('date', function(text, options){
-  var format = options.format || 'YYYY-MM-DD'
+  var format = options.format || 'YYYY-MM-DD';
   var ms = text;
   if(options.unit == 's'){
     ms = text * 1000;
   }
   return moment(ms).format(format);
-})
+});
 
 module.exports = app;

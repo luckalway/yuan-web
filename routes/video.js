@@ -13,10 +13,10 @@ router.get('/messages/:id', function(req, res, next) {
     }
 
     body.parts.forEach(function(part){
-      part.title = body.message.title; 
+      part.title = body.message.title;
       var countOfParts = parseInt(body.message.countOfParts);
       if(countOfParts >1 ){
-        part.title += '(' + part.partNo + '/' + countOfParts + ')'
+        part.title += '(' + part.partNo + '/' + countOfParts + ')';
       }
 
       if(part.partNo == partNo){
