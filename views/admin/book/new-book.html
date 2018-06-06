@@ -1,0 +1,65 @@
+{{!< admin}}
+
+<div class="ui large breadcrumb">
+  <a class="section" href="/">首页</a>
+  <span class="divider">/</span>
+  <a class="section" href="/admin/books">电子书列表</a>
+  <span class="divider">/</span>
+  <div class="active section">新建电子书</div>
+</div>
+
+<div class="ui divider"></div>
+<div class="ui ordered steps">
+  <div class="active step">
+    <div class="content">
+      <div class="title">新建电子书</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="content">
+      <div class="title">选择文章</div>
+    </div>
+  </div>
+</div>
+
+<div class="ui grid">
+  <div class="five wide column">
+    <form class="ui form" method="post" enctype="multipart/form-data" action="/admin/books">
+      <div class="field">
+        <label>封面</label>
+        <input name="coverImage" placeholder="请选择封面" type="file">
+      </div>
+      <div class="inline field">
+        <label>标题</label>
+        <input name="title" placeholder="请输入书名" type="text">
+      </div>
+      <div class="inline field">
+        <label>作者</label>
+        <input name="author" placeholder="请输入作者" type="text">
+      </div>
+
+      <select name="category" class="ui dropdown">
+        <option value="">请选择类别</option>
+        <option value="jiangudejia">坚固的家</option>
+        <option value="lidaizhuanzhu">历代专著</option>
+      </select>
+      <div class="ui divider"></div>
+      <button class="ui button" type="submit">完成</button>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+require(["jquery", "semantic"], function($) {
+  $('.ui.checkbox').checkbox();
+
+  $('.ui.form').form({
+    fields: {
+      title: 'empty',
+      author: 'empty',
+      cover: 'empty',
+      category: 'empty'
+    }
+  });
+});
+</script>

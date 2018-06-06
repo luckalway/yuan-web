@@ -1,5 +1,5 @@
 {
-  "name": "quan-web-app",
+  "name": "yuan-web",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -16,6 +16,9 @@
     "express-hbs": "~1.0.4",
     "node-rest-client":"3.1.0",
     "log4js":"2.5.3",
-    "moment":"2.22.0"
+    "moment":"2.22.0",
+    "formidable":"1.2.1",
+    "randomize":"*",
+    "url-join":"4.0.0"
   }
 }

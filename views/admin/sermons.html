@@ -1,11 +1,11 @@
 {{!< admin}}
 
-<div class="ui padded grid" style="padding-top:10px;">
+<div class="ui padded grid">
   <div class="ui cards">
     {{#messages}}
     <div class="card">
       <div class="content">
-        <div class="header"><a href="/admin/messages/{{_id}}">{{title}}</a></div>
+        <div class="header"><a href="/admin/sermons/{{_id}}">{{title}}</a></div>
         <div class="meta">
           <span class="date">创建日期：{{date createdDate unit='ms'}}</span> 上传进度:{{countOfUploaded}}/{{countOfParts}}
         </div>

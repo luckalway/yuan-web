@@ -19,15 +19,16 @@ exports.get = function(path, callback){
     LOG.debug('Get request on '+url+', status:'+repsonse.statusCode);
     return callback(null, data);
   });
-}
+};
 
 exports.post = function(path, data, callback){
   var args = {
     data: data,
     headers: { "Content-Type": "application/json" }
   };
+  LOG.debug('Post request on %s with the body:', getUrl(path), data);
   client.post(getUrl(path), args, callback);
-}
+};
 
 exports.patch = function(path, data, callback){
   var args = {
@@ -35,4 +36,4 @@ exports.patch = function(path, data, callback){
     headers: { "Content-Type": "application/json" }
   };
   client.patch(getUrl(path), args, callback);
-}
+};

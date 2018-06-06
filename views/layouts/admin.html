@@ -12,8 +12,24 @@
   <script src="/libs/config.js"></script>
 </head>
 <body>
-  <div class="ui container">
-    {{{body}}}
+  <div class="ui container" style="padding-top:10px;">
+    <div class="ui left visible vertical inverted sidebar labeled icon menu">
+      <a class="item">
+        <i class="video layout icon"></i>
+        讲台
+      </a>
+      <a class="item" href="/admin/books">
+        <i class="book layout icon"></i>
+        著作
+      </a>
+      <a class="item">
+        <i class="music layout icon"></i>
+        诗歌
+      </a>
+    </div>
+    <div class="pusher">
+      {{{body}}}
+    </div>
   </div>
 </body>
 </html>
