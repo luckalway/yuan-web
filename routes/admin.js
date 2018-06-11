@@ -75,8 +75,11 @@ router.get('/books', function(req, res){
 
 router.post('/books', function(req, res, next){
   var form = new formidable.IncomingForm();
-  form.parse(req, function (err, fields, files) {
-    var oldpath = files.coverImage.path;
+  form.parse(req, function (err, bookObj, files) {
+    if(!files.coverImage){
+      return next('The coverImage is required!');
+    }
+    let oldpath = files.coverImage.path;
     var bookId = randomize('a0', 5);
     var filename = '' + new Date().getTime() + files.coverImage.name.substring(files.coverImage.name.indexOf('.'));
     var bookFolder = path.join(fileuploadConf.baseUploadDir, 'ebooks', bookId);
@@ -88,11 +91,10 @@ router.post('/books', function(req, res, next){
         if (err) {
           return next(err);
         }
-        fields.coverImage = urljoin(fileuploadConf.baseUploadUrl,'ebooks',bookId,filename);
-        LOG.debug('A new file uploaded, path:%s, url:%s', path.join(bookFolder,filename), fields.coverImage);
-        client.post(apiUrls.ebook+'/books', fields, function (book, response) {
-          //LOG.debug(response);
-          res.redirect('/admin/books/11/select-articles');
+        bookObj.coverImage = urljoin(fileuploadConf.baseUploadUrl,'ebooks',bookId,filename);
+        LOG.debug('A new file uploaded, path:%s, url:%s', path.join(bookFolder,filename), bookObj.coverImage);
+        client.post(apiUrls.ebook+'/books', bookObj, function (book, response) {
+          res.redirect('/admin/books/11/select-articles?category=' + bookObj.category);
         });
       });
     });

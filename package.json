@@ -20,5 +20,8 @@
     "formidable":"1.2.1",
     "randomize":"*",
     "url-join":"4.0.0"
+  },
+  "jshintConfig":{
+    "esversion":6
   }
 }

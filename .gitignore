@@ -3,3 +3,4 @@
 /.settings/
 /npm-debug.log
 env-*
+/public/data/
