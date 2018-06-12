@@ -15,12 +15,12 @@
       <div class="title">新建电子书</div>
     </div>
   </div>
-  <div class="active step">
+  <div class="completed step">
     <div class="content">
       <div class="title">选择文章</div>
     </div>
   </div>
-  <div class="step">
+  <div class="active step">
     <div class="content">
       <div class="title">修改文章标题</div>
     </div>
@@ -38,37 +38,20 @@
   <tbody>
     {{#articles}}
     <tr>
-      <td><input type="checkbox" class="checkbox" value="{{_id}}" name="checkbox"/></td>
+      <td><input type="checkbox" value="{{_id}}" name="checkbox"/></td>
       <td><a href="{{url}}" target="_blank">{{title}}</a></td>
       <td data-sort="{{create_time}}">{{date create_time unit='s'}}</td>
     </tr>
     {{/articles}}
   </tbody>
 </table>
-<button id="finishButton" class="ui button" type="submit">完成选择</button>
+<button class="ui button" type="submit">完成</button>
 
 <script type="text/javascript">
 require(["jquery", "datatable"], function($) {
   $('#articlesTable').DataTable({
     "order": [[ 2, "asc" ]],
     pageLength: 100
-  });
-
-  $('#selectAll').change(function(){
-    $('.checkbox').attr('checked', $('#selectAll').is(':checked'));
-  });
-
-  $('#finishButton').click(function(){
-    var isConfirmed=confirm('确认提交');
-    if(isConfirmed){
-      let ids = [];
-      $('.checkbox:checked').each(function(index, item){
-        ids.push($(item).val());
-      });
-      $.post('select-articles', {ids: ids.join(',')}, function(response){
-
-      });
-    }
   });
 });
 </script>

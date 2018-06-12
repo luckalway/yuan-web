@@ -98,7 +98,6 @@ router.post('/books', function(req, res, next){
         });
       });
     });
-
   });
 });
 
@@ -109,8 +108,28 @@ router.get('/books/new-book', function(req, res){
   });
 });
 
-router.get('/books/:id/select-articles', function(req, res) {
-  res.render('admin/book/select-articles', {});
+router.get('/books/:id/select-articles', function(req, res, next) {
+  client.get(apiUrls.ebook+'/mp-articles?category='+req.query.category, function (err, articles) {
+    if(err){
+      return next(err);
+    }
+    res.render('admin/book/select-articles', {'articles':articles});
+  });
+});
+
+router.post('/books/:id/select-articles', function(req, res, next) {
+  LOG.info(req.body.ids);
+  res.send({status: 'success'});
+  res.status(200).end();
+});
+
+router.get('/books/:id/modify-article-titles', function(req, res, next) {
+  client.get(apiUrls.ebook+'/mp-articles?category='+req.query.category, function (err, articles) {
+    if(err){
+      return next(err);
+    }
+    res.render('admin/book/modify-article-titles', {'articles':articles});
+  });
 });
 
 

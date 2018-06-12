@@ -79,7 +79,7 @@ app.use(function(err, req, res, next) {
 hbs.registerHelper('date', function(text, options){
   var format = options.format || 'YYYY-MM-DD';
   var ms = text;
-  if(options.unit == 's'){
+  if(options.hash && options.hash.unit == 's'){
     ms = text * 1000;
   }
   return moment(ms).format(format);
