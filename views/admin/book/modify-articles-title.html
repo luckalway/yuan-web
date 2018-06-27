@@ -70,8 +70,8 @@ require(["jquery", "datatable"], function($) {
       type:"put",
       dataType:"json",
       data:{articleTitles: JSON.stringify(articles)},
-      success:function(msg){
-        console.log(msg);
+      success:function(){
+        location.href = '/admin/books';
       }
     });
   });

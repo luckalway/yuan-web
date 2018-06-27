@@ -1,0 +1,9 @@
+{{!< admin}}
+
+<div class="ui grid" style="margin-left:30px;">
+  <div class="doubling four column row">
+    {{#articles}}
+    <div class="column"><a target="_blank" href="/articles/{{_id}}" class="article-link">{{title}}</a></div>
+    {{/articles}}
+  </div>
+</div>

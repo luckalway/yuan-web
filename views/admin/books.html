@@ -1,1 +1,41 @@
 {{!< admin}}
+
+<div class="ui link cards">
+  {{#books}}
+  <div class="card book" data-id="{{_id}}">
+    <div class="image">
+      <img src="{{coverImage}}">
+    </div>
+    <div class="content">
+      <div class="header">{{title}}</div>
+      <div class="meta">
+        <a>{{author}}</a>
+      </div>
+      <div class="description">
+
+      </div>
+    </div>
+    <div class="extra content">
+      <span class="right floated">
+        {{category category}}
+      </span>
+    </div>
+  </div>
+  {{/books}}
+</div>
+
+<button id="newBookButton" class="ui button" style="margin-top:20px;">
+    新建书籍
+</button>
+
+<script type="text/javascript">
+require(["jquery"], function($) {
+  $('.book').click(function(){
+    location.href = '/admin/books/' + $(this).data('id');
+  });
+
+  $('#newBookButton').click(function(){
+    location.href = '/admin/books/new-book';
+  });
+});
+</script>

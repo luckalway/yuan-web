@@ -93,4 +93,14 @@ hbs.registerHelper('date', function(text, options){
   return moment(ms).format(format);
 });
 
+
+let categoriesMap = new Map([
+  ['jiangudejia', '坚固的家'],
+  ['lidaizhuanzhu', '历代专著']
+]);
+
+hbs.registerHelper('category', function(categoryCode){
+  return categoriesMap.get(categoryCode) || '';
+});
+
 module.exports = app;

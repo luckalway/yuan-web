@@ -65,11 +65,17 @@ router.patch('/messages/:id', function(req, res) {
   });
 });
 
-router.get('/books', function(req, res){
-  res.render('admin/books', {
-    title: '专著',
-    messages:{}
+router.get('/books', function(req, res, next){
+  client.get(apiUrls.ebook+'/books', function (err, books) {
+    if(err){
+      return next(err);
+    }
+    res.render('admin/books', {
+      title: '专著',
+      books: books
+    });
   });
+
 });
 
 router.post('/books', function(req, res, next){
@@ -90,6 +96,7 @@ router.post('/books', function(req, res, next){
         if (err) {
           return next(err);
         }
+        bookObj._id = bookId;
         bookObj.coverImage = urljoin(fileuploadConf.baseUploadUrl,'ebooks',bookId,filename);
         LOG.debug('A new file uploaded, path:%s, url:%s', path.join(bookFolder,filename), bookObj.coverImage);
         client.post(apiUrls.ebook+'/books', bookObj, function (book, response) {
@@ -112,7 +119,7 @@ router.get('/books/:id/select-articles', function(req, res, next) {
     if(err){
       return next(err);
     }
-    res.render('admin/book/select-articles', {'articles':articles});
+    res.render('admin/book/select-articles', {articles:articles});
   });
 });
 
@@ -129,6 +136,18 @@ router.get('/books/:id/modify-articles-title', function(req, res, next) {
   res.render('admin/book/modify-articles-title', {
     bookId: req.params.id,
     selectedArticles:req.session.selectedArticles
+  });
+});
+
+router.get('/books/:id', function(req, res, next) {
+  client.get(`${apiUrls.ebook}/books/${req.params.id}`, function(err, articles) {
+    if(err){
+      return next(err);
+    }
+
+    res.render('admin/book/book', {
+      articles: articles
+    });
   });
 });
 
