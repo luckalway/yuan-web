@@ -1,0 +1,88 @@
+{{!< admin}}
+
+<div class="ui large breadcrumb">
+  <a class="section" href="/">首页</a>
+  <span class="divider">/</span>
+  <a class="section" href="/admin/books">电子书列表</a>
+  <span class="divider">/</span>
+  <div class="active section">选择文章</div>
+</div>
+
+<div class="ui divider"></div>
+<div class="ui ordered steps">
+  <div class="completed step">
+    <div class="content">
+      <div class="title">新建电子书</div>
+    </div>
+  </div>
+  <div class="completed step">
+    <div class="content">
+      <div class="title">选择文章</div>
+    </div>
+  </div>
+  <div class="active step">
+    <div class="content">
+      <div class="title">修改文章标题</div>
+    </div>
+  </div>
+</div>
+
+<div class="ui grid">
+  <div class="row">
+    <div class="ui labeled input">
+      <div class="ui label">
+        重复词：
+      </div>
+      <input id="replaceTitleInput" name="replacedTitle" placeholder="请输入要替换的重复词" type="text">
+      <button class="ui right attached button" id="replaceButton">开始替换</button>
+    </div>
+  </div>
+</div>
+
+<div class="ui form">
+  {{#selectedArticles}}
+  <div class="ui fluid icon input">
+    <input data-id="{{id}}" class="title-input" type="text" value="{{title}}">
+  </div>
+  {{/selectedArticles}}
+</div>
+
+<button id="submitButton" class="ui button" type="submit">完成修改，提交！</button>
+
+<script type="text/javascript">
+require(["jquery", "datatable"], function($) {
+  $('#articlesTable').DataTable({
+    "order": [[ 2, "asc" ]],
+    pageLength: 100
+  });
+
+  $('#submitButton').click(function(){
+    let articles = [];
+    $('.title-input').each(function(i,e){
+      articles.push({
+        id: $(e).data('id'),
+        title: $(e).val()
+      });
+    });
+
+    $.ajax({
+      url:'/admin/books/{{bookId}}',
+      type:"put",
+      dataType:"json",
+      data:{articleTitles: JSON.stringify(articles)},
+      success:function(msg){
+        console.log(msg);
+      }
+    });
+  });
+
+  $('#replaceButton').click(function(){
+    if($('#replaceTitleInput').val()){
+      $('.title-input').each(function(i,e){
+        let value = $(e).val();
+        $(e).val(value.replace($('#replaceTitleInput').val(),''));
+      });
+    }
+  });
+});
+</script>

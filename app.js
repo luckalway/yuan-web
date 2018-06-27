@@ -8,7 +8,7 @@ var hbs = require('express-hbs');
 var merge = require('merge');
 var moment = require('moment');
 var log4js = require('log4js');
-
+var session = require('express-session');
 var app = express();
 
 var env = merge.recursive(require('./env-default'), require('./env-'+app.get('env')));
@@ -40,6 +40,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.set('trust proxy', 1); // trust first proxy
+app.use(session({
+  secret: 'yuan spring',
+  resave: false,
+  saveUninitialized: true//,
+  //cookie: { secure: true }
+}));
 
 app.use(function(req, res, next) {
   res.locals.videoUrl = env.conf.videoUrl;

@@ -7,7 +7,6 @@ var fs = require('fs');
 var randomize = require('randomatic');
 var mkdirp = require('mkdirp');
 var urljoin = require('url-join');
-
 var fileuploadConf = global.CONF.fileupload;
 var apiBaseUrl = global.CONF.apiBaseUrl2;
 
@@ -80,9 +79,9 @@ router.post('/books', function(req, res, next){
       return next('The coverImage is required!');
     }
     let oldpath = files.coverImage.path;
-    var bookId = randomize('a0', 5);
-    var filename = '' + new Date().getTime() + files.coverImage.name.substring(files.coverImage.name.indexOf('.'));
-    var bookFolder = path.join(fileuploadConf.baseUploadDir, 'ebooks', bookId);
+    let bookId = randomize('a0', 5);
+    let filename = '' + new Date().getTime() + files.coverImage.name.substring(files.coverImage.name.indexOf('.'));
+    let bookFolder = path.join(fileuploadConf.baseUploadDir, 'ebooks', bookId);
     mkdirp(bookFolder, function (err) {
       if (err) {
         return next(err);
@@ -94,7 +93,7 @@ router.post('/books', function(req, res, next){
         bookObj.coverImage = urljoin(fileuploadConf.baseUploadUrl,'ebooks',bookId,filename);
         LOG.debug('A new file uploaded, path:%s, url:%s', path.join(bookFolder,filename), bookObj.coverImage);
         client.post(apiUrls.ebook+'/books', bookObj, function (book, response) {
-          res.redirect('/admin/books/11/select-articles?category=' + bookObj.category);
+          res.redirect(`/admin/books/${bookId}/select-articles?category=${bookObj.category}`);
         });
       });
     });
@@ -118,20 +117,30 @@ router.get('/books/:id/select-articles', function(req, res, next) {
 });
 
 router.post('/books/:id/select-articles', function(req, res, next) {
-  LOG.info(req.body.ids);
-  res.send({status: 'success'});
+  req.session.selectedArticles = JSON.parse(req.body.articleTitles);
+  res.send({
+    status: 'success',
+    redirectUrl: `/admin/books/${req.params.id}/modify-articles-title`
+  });
   res.status(200).end();
 });
 
-router.get('/books/:id/modify-article-titles', function(req, res, next) {
-  client.get(apiUrls.ebook+'/mp-articles?category='+req.query.category, function (err, articles) {
-    if(err){
-      return next(err);
-    }
-    res.render('admin/book/modify-article-titles', {'articles':articles});
+router.get('/books/:id/modify-articles-title', function(req, res, next) {
+  res.render('admin/book/modify-articles-title', {
+    bookId: req.params.id,
+    selectedArticles:req.session.selectedArticles
   });
 });
 
+router.put('/books/:id', function(req, res, next) {
+  client.put(`${apiUrls.ebook}/books/${req.params.id}`, {
+    action: 'addArticles',
+    articleTitles: JSON.parse(req.body.articleTitles)
+  }, function (response) {
+    res.send(response);
+    res.status(200).end();
+  });
+});
 
 router.get('/articles', function(req, res, next) {
   client.get(apiUrls.ebook + '/articles', function (err, messages) {

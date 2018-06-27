@@ -30,6 +30,15 @@ exports.post = function(path, data, callback){
   client.post(getUrl(path), args, callback);
 };
 
+exports.put = function(path, data, callback){
+  var args = {
+    data: data,
+    headers: { "Content-Type": "application/json" }
+  };
+  LOG.debug('Put request on %s with the body:', getUrl(path), data);
+  client.put(getUrl(path), args, callback);
+};
+
 exports.patch = function(path, data, callback){
   var args = {
     data: data,
