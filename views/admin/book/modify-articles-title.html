@@ -69,7 +69,7 @@ require(["jquery", "datatable"], function($) {
       url:'/admin/books/{{bookId}}',
       type:"put",
       dataType:"json",
-      data:{articleTitles: JSON.stringify(articles)},
+      data:{articles: JSON.stringify(articles)},
       success:function(){
         location.href = '/admin/books';
       }

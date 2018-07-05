@@ -19,6 +19,7 @@ LOG.level = app.get('env')=='production'?'info':'debug';
 
 var index = require('./routes/index');
 var video = require('./routes/video');
+var sermon = require('./routes/sermon');
 var song = require('./routes/song');
 var article = require('./routes/article');
 var book = require('./routes/book');
@@ -57,6 +58,7 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/', video);
+app.use('/sermons', sermon);
 app.use('/songs', song);
 app.use('/articles', article);
 app.use('/books', book);

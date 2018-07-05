@@ -14,6 +14,14 @@
 }
 </style>
 <div class="grid-container full"  style="padding:10px 10px 0 10px;">
+  <div class="ui breadcrumb">
+    <a class="section" href="/">首页</a>
+    <i class="right angle icon divider"></i>
+    <a class="section" href="/books/{{bookId}}">{{bookTitle}}</a>
+    <i class="right angle icon divider"></i>
+    <div class="active section">{{title}}</div>
+  </div>
+
   <div class="grid-x">
     <div class="small-12">
       {{#prev}}
@@ -62,7 +70,7 @@
 require(["jquery","semantic"], function($, s){
   $('.control-button').click(function(){
     if($(this).data('id')){
-      location.href=  '/articles/' + $(this).data('id');
+      location.href=  '/books/{{bookId}}/articles/' + $(this).data('id');
     }
   });
 });

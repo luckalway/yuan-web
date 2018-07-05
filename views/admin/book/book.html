@@ -1,9 +1,38 @@
 {{!< admin}}
 
-<div class="ui grid" style="margin-left:30px;">
-  <div class="doubling four column row">
-    {{#articles}}
-    <div class="column"><a target="_blank" href="/articles/{{_id}}" class="article-link">{{title}}</a></div>
-    {{/articles}}
-  </div>
-</div>
+<ul class="sortable">
+  {{#articles}}
+  <li class="ui-state-default ui-sortable-handle" data-id="{{_id}}">
+    <i class="sort icon"></i>
+    <a target="_blank" href="/articles/{{_id}}" class="article-link">{{title}}</a>
+  </li>
+  {{/articles}}
+</ul>
+
+<button id="saveButton" class="ui button">顺序已调整好，我要保存</button>
+
+<script type="text/javascript">
+require(["jquery", "jqueryui"], function($) {
+  $(".sortable").sortable();
+  $(".sortable").disableSelection();
+
+  $('#saveButton').click(function(){
+    var ids = [];
+    $('ul.sortable').children().each(function(i ,e){
+      ids.push($(e).data('id'));
+    });
+    $.ajax({
+      url:'/admin/books/{{bookId}}',
+      type:"put",
+      dataType:"json",
+      data:{
+        action: 'rearrange',
+        articles: JSON.stringify(ids)
+      },
+      success:function(){
+        location.reload();
+      }
+    });
+  });
+});
+</script>

@@ -1,0 +1,19 @@
+{{!< default}}
+
+<div class="yuan-container">
+  <div class="ui breadcrumb">
+    <a class="section" href="/">首页</a>
+    <i class="right angle icon divider"></i>
+    <div class="active section">{{title}}</div>
+  </div>
+
+  <h1 class="ui header">{{title}}</h1>
+  <h2 class="ui header">目录</h2>
+  <div class="ui grid">
+    <div class="doubling four column row">
+      {{#articles}}
+      <div class="column"><a href="/books/{{../_id}}/articles/{{_id}}">{{title}}</div>
+      {{/articles}}
+    </div>
+  </div>
+</div>

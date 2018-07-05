@@ -15,3 +15,11 @@
 #mediaList .active{
 	background-color:#9933cc;
 }
+
+.sortable { list-style-type: none; width: 60%; }
+.sortable li {height: 16px;height:22px;margin-top:5px;}
+
+.yuan-container{
+	padding-top: 1rem;
+	padding-left: 1rem;
+}

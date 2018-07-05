@@ -12,7 +12,7 @@ var apiBaseUrl = global.CONF.apiBaseUrl2;
 
 router.get('/signIn', function(req, res) {
   res.render('admin/signIn', {});
-});
+}); 
 
 router.get('/users', function(req, res, next) {
   client.get(apiBaseUrl+'/users', function (err, users) {
@@ -146,6 +146,7 @@ router.get('/books/:id', function(req, res, next) {
     }
 
     res.render('admin/book/book', {
+      bookId: req.params.id,
       articles: articles
     });
   });
@@ -153,8 +154,8 @@ router.get('/books/:id', function(req, res, next) {
 
 router.put('/books/:id', function(req, res, next) {
   client.put(`${apiUrls.ebook}/books/${req.params.id}`, {
-    action: 'addArticles',
-    articleTitles: JSON.parse(req.body.articleTitles)
+    action: req.body.action || 'addArticles',
+    articles: JSON.parse(req.body.articles)
   }, function (response) {
     res.send(response);
     res.status(200).end();
