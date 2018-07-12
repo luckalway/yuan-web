@@ -18,7 +18,7 @@
     "log4js":"2.5.3",
     "moment":"2.22.0",
     "formidable":"1.2.1",
-    "randomize":"3.0.0",
+    "randomatic":"3.0.0",
     "url-join":"4.0.0",
     "express-session":"1.15.6"
   },
