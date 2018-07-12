@@ -10,9 +10,20 @@ var urljoin = require('url-join');
 var fileuploadConf = global.CONF.fileupload;
 var apiBaseUrl = global.CONF.apiBaseUrl2;
 
+router.get('/*', function(req, res, next){
+  if(req.headers.host == 'localhost:3000'){
+    next();
+  }else{
+    next({
+      status:404,
+      desc: 'No authorized'
+    });
+  }
+});
+
 router.get('/signIn', function(req, res) {
   res.render('admin/signIn', {});
-}); 
+});
 
 router.get('/users', function(req, res, next) {
   client.get(apiBaseUrl+'/users', function (err, users) {

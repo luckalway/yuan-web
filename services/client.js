@@ -12,11 +12,11 @@ function getUrl(path){
 
 exports.get = function(path, callback){
   var url = getUrl(path);
-  client.get(url, function(data, repsonse){
-    if(repsonse.statusCode != 200){
-      return callback('Exception on get request for "'+url+'": '+repsonse.statusCode+', '+repsonse.description);
+  client.get(url, function(data, response){
+    if(response.statusCode != 200){
+      return callback('Exception on get request for "'+url+'": '+response.statusCode+', '+response.description);
     }
-    LOG.debug('Get request on '+url+', status:'+repsonse.statusCode);
+    LOG.debug('Get request on '+url+', status:'+response.statusCode);
     return callback(null, data);
   });
 };
