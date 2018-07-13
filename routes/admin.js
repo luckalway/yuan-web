@@ -151,14 +151,14 @@ router.get('/books/:id/modify-articles-title', function(req, res, next) {
 });
 
 router.get('/books/:id', function(req, res, next) {
-  client.get(`${apiUrls.ebook}/books/${req.params.id}`, function(err, articles) {
+  client.get(`${apiUrls.ebook}/books/${req.params.id}`, function(err, book) {
     if(err){
       return next(err);
     }
 
     res.render('admin/book/book', {
       bookId: req.params.id,
-      articles: articles
+      book: book
     });
   });
 });

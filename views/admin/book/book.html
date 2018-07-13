@@ -1,12 +1,12 @@
 {{!< admin}}
 
 <ul class="sortable">
-  {{#articles}}
+  {{#book.articles}}
   <li class="ui-state-default ui-sortable-handle" data-id="{{_id}}">
     <i class="sort icon"></i>
     <a target="_blank" href="/articles/{{_id}}" class="article-link">{{title}}</a>
   </li>
-  {{/articles}}
+  {{/book.articles}}
 </ul>
 
 <button id="saveButton" class="ui button">顺序已调整好，我要保存</button>

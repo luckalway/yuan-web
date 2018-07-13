@@ -25,7 +25,7 @@ router.get('/:id', function(req, res, next) {
       }
     });
     body.title = body.message.title;
-    res.render('video', body);
+    res.render('sermon', body);
   });
 });
 

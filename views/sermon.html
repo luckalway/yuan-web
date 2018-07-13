@@ -33,7 +33,7 @@
 
 
       <hr style="margin:5px;">
-      <div id="messageTitle" style="color:#FF9224;">
+      <div id="sermonTitle" style="color:#FF9224;">
         {{currentPart.title}}
       </div>
 
@@ -43,9 +43,9 @@
       <div class="ui equal width grid">
         <div class="column">
           <div id="avSwitchButton" class="ui buttons">
-            <button id="videoButton" data-type="video" class="ui button">视频</button>
+            <button id="videoButton" data-type="video" class="ui positive button active">视频</button>
             <div class="or"></div>
-            <button id="audioButton" data-type="audio" class="ui positive button active">音频</button>
+            <button id="audioButton" data-type="audio" class="ui button">音频</button>
           </div>
         </div>
 
@@ -110,28 +110,30 @@ require(["jquery","semantic"], function($, s){
     }
   });
 
+  var currentMode = 'v';
   $('#avSwitchButton').click(function(){
+    if(currentMode == 'v'){
+      videoPlayer.pause();
+      $('#audioContainer').show();
+      $('#videoContainer').hide();
+      audioPlayer.load();
+      currentMode = 'a';
+    }else{
+      audioPlayer.pause();
+      $('#videoContainer').show();
+      $('#audioContainer').hide();
+      videoPlayer.load();
+      currentMode = 'v';
+    }
+
     $(this).find('.button').each(function(i, item){
       var item = $(item);
       if(item.hasClass('active')){
-        item.removeClass('active');
-        item.removeClass('positive');
+        item.removeClass('active positive');
       }else{
-        item.addClass('active');
-        item.addClass('positive');
-        if(item.data('type') == 'audio'){
-          videoPlayer.pause();
-          $('#audioContainer').show();
-          $('#videoContainer').hide();
-          audioPlayer.load();
-        }else{
-          audioPlayer.pause();
-          $('#videoContainer').show();
-          $('#audioContainer').hide();
-          videoPlayer.load();
-        }
+        item.addClass('active positive');
       }
-    })
+    });
   });
 
   $('.ui.checkbox').checkbox();
@@ -149,15 +151,17 @@ require(["jquery","semantic"], function($, s){
 
     $('#mediaList .segment').removeClass('active');
     $(this).addClass('active');
-    $('#messageTitle').html($(this).data('title'));
+    $('#sermonTitle').html($(this).data('title'));
 
     var self = this;
     if($('#audioButton').hasClass('active')){
       audioPlayer.src = $(self).data('audio');
       audioPlayer.load();
+      audioPlayer.play();
     }else{
       videoPlayer.src = $(self).data('video');
       videoPlayer.load();
+      videoPlayer.play();
     }
   });
 })
